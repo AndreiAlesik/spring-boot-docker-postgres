@@ -13,7 +13,7 @@ spring:
     #url: jdbc:postgresql://db:5432/automobiles
     url: jdbc:postgresql://localhost:5432/automobiles
     username: postgres
-    password: postgres
+    password: admin
   # JPA properties
   jpa:
     hibernate:

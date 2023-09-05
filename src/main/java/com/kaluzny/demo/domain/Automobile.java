@@ -9,8 +9,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Entity
@@ -20,33 +23,31 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Schema(name = "Automobile", description = "Data object for an automobile", oneOf = Automobile.class)
 public class Automobile {
 
-    @Schema(description = "Unique identifier of the Automobile.", example = "1")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @Schema(description = "Name of the Automobile.", example = "Volvo", required = true)
     @Size(max = 50)
     private String name;
 
-    @Schema(description = "Color of the Automobile.", example = "Red", required = true)
     @Size(max = 50)
     private String color;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime creationDate = LocalDateTime.now();
+    @CreationTimestamp
+    private LocalDateTime creationDate;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime updateDate = LocalDateTime.now();
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
 
-    @Column(name = "original_color")
+    @Column(name = "is_original_color")
     private Boolean originalColor = Boolean.TRUE;
 
     private Boolean deleted = Boolean.FALSE;
