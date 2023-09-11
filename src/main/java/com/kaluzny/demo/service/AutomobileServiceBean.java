@@ -75,26 +75,16 @@ public class AutomobileServiceBean implements AutomobileService {
         return automobileMapper.mapToDto(updatedAuto);
     }
 
-
     @Override
     public void removeAutomobileById(UUID id) {
         automobileRepository.markRemoved(id);
     }
 
-    /**
-     * Removes all automobiles from the database.
-     */
     @Override
     public void removeAllAutomobiles() {
         automobileRepository.deleteAll();
     }
 
-    /**
-     * Retrieves a collection of automobiles by their color and pushes the collection to a JMS topic.
-     *
-     * @param color The color of the automobiles to retrieve.
-     * @return ResponseEntity containing the collection of retrieved automobiles, or INTERNAL_SERVER_ERROR if an error occurs.
-     */
     @Override
     public ResponseEntity<Collection<AutoResponseDto>> findAutomobileByColor(String color) {
         try (Connection connection = Objects.requireNonNull(jmsTemplate.getConnectionFactory()).createConnection()) {
@@ -111,13 +101,6 @@ public class AutomobileServiceBean implements AutomobileService {
         }
     }
 
-    /**
-     * Retrieves a collection of automobiles by their name and color.
-     *
-     * @param name  The name of the automobiles to retrieve.
-     * @param color The color of the automobiles to retrieve.
-     * @return Collection of AutoResponseDto representing automobiles with the specified name and color.
-     */
     @Override
     public Collection<AutoResponseDto> findAutomobileByNameAndColor(String name, String color) {
         return automobileRepository.findByNameAndColor(name, color)
@@ -125,14 +108,6 @@ public class AutomobileServiceBean implements AutomobileService {
                 .toList();
     }
 
-    /**
-     * Retrieves a paged collection of automobiles by their color starting with a specified prefix.
-     *
-     * @param colorStartsWith The prefix for the color of the automobiles to retrieve.
-     * @param page            The page number for pagination.
-     * @param size            The number of items per page.
-     * @return Collection of AutoResponseDto representing paged automobiles with colors starting with the specified prefix.
-     */
     @Override
     public Collection<AutoResponseDto> findAutomobileByColorStartsWith(String colorStartsWith, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
