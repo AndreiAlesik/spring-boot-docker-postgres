@@ -27,4 +27,5 @@ public interface AutomobileService {
     Collection<AutoResponseDto> findAutomobileByNameAndColor(String name, String color);
 
     Collection<AutoResponseDto> findAutomobileByColorStartsWith(String colorStartsWith, int page, int size);
+
 }

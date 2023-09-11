@@ -51,4 +51,9 @@ public class Consumer {
     public void getAutomobileListener8(List<AutoResponseDto> automobile) {
         log.info("\u001B[34m" + "Automobile Consumer 9: " + automobile + "\u001B[0m");
     }
+
+    @JmsListener(destination = "AutoTopic", containerFactory = "automobileJmsContFactory")
+    public void createNewAutomobile(Automobile automobile) {
+        log.info("\u001B[33m" + "Automobile Consumer 10: " + automobile + "\u001B[0m");
+    }
 }
